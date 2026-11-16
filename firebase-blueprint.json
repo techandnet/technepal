@@ -1,0 +1,197 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "Gadget, smartphone, laptop, accessory, or appliance sold in the storefront with full technical specs.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "minLength": 2, "maxLength": 160 },
+        "slug": { "type": "string", "minLength": 2, "maxLength": 160, "pattern": "^[a-z0-9-]+$" },
+        "brandSlug": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "brandName": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "categorySlug": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "categoryName": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "department": { "type": "string", "enum": ["mobiles-tablets", "laptops-computing", "mobile-accessories", "audio-wearables", "heating-cooling", "home-kitchen"] },
+        "productType": { "type": "string", "enum": ["smartphone", "laptop", "accessory", "appliance"] },
+        "basePrice": { "type": "number" },
+        "originalPrice": { "type": "number" },
+        "inStock": { "type": "boolean" },
+        "isFeatured": { "type": "boolean" },
+        "emiAvailable": { "type": "boolean" },
+        "imageUrl": { "type": "string", "maxLength": 500 },
+        "warrantyInfo": { "type": "string", "maxLength": 160 },
+        "summary": { "type": "string", "maxLength": 500 },
+        "variants": { "type": "array" },
+        "specs": { "type": "object" },
+        "customSpecs": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "slug", "brandSlug", "brandName", "categorySlug", "categoryName", "department", "productType", "basePrice", "inStock", "createdAt", "updatedAt"]
+    },
+    "Brand": {
+      "title": "Brand",
+      "description": "Mobile, laptop, audio, or electronics manufacturer brand.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "slug": { "type": "string", "minLength": 1, "maxLength": 80, "pattern": "^[a-z0-9-]+$" },
+        "deviceTypes": { "type": "array" },
+        "tier": { "type": "string", "maxLength": 40 },
+        "subBrands": { "type": "string", "maxLength": 160 },
+        "laptopTier": { "type": "string", "maxLength": 40 },
+        "laptopLineups": { "type": "string", "maxLength": 160 },
+        "gamingDivisionName": { "type": "string", "maxLength": 100 },
+        "gamingLineups": { "type": "string", "maxLength": 160 },
+        "sortOrder": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "slug", "deviceTypes", "sortOrder", "createdAt", "updatedAt"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Storefront product category grouped by department.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "slug": { "type": "string", "minLength": 2, "maxLength": 100, "pattern": "^[a-z0-9-]+$" },
+        "department": { "type": "string", "enum": ["mobiles-tablets", "laptops-computing", "mobile-accessories", "audio-wearables", "heating-cooling", "home-kitchen"] },
+        "description": { "type": "string", "maxLength": 240 },
+        "sortOrder": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "slug", "department", "sortOrder", "createdAt", "updatedAt"]
+    },
+    "Post": {
+      "title": "Post",
+      "description": "Editorial tech news, device review, buying guide, or price list article.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "minLength": 3, "maxLength": 180 },
+        "slug": { "type": "string", "minLength": 3, "maxLength": 180, "pattern": "^[a-z0-9-]+$" },
+        "postType": { "type": "string", "enum": ["Tech News", "Review", "Buying Guide", "Price List"] },
+        "status": { "type": "string", "enum": ["draft", "published"] },
+        "authorName": { "type": "string", "maxLength": 80 },
+        "readTime": { "type": "string", "maxLength": 30 },
+        "featuredImageUrl": { "type": "string", "maxLength": 500 },
+        "excerpt": { "type": "string", "maxLength": 400 },
+        "content": { "type": "string", "maxLength": 20000 },
+        "relatedProductSlugs": { "type": "array" },
+        "publishedAt": { "type": "string", "maxLength": 40 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "slug", "postType", "status", "content", "createdAt", "updatedAt"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer purchase order with Nepal delivery zone and payment status.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "maxLength": 128 },
+        "customerName": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "customerPhone": { "type": "string", "minLength": 7, "maxLength": 20 },
+        "customerEmail": { "type": "string", "maxLength": 120 },
+        "deliveryZone": { "type": "string", "enum": ["kathmandu-valley", "outside-valley"] },
+        "shippingAddress": { "type": "string", "minLength": 4, "maxLength": 240 },
+        "items": { "type": "array" },
+        "subtotal": { "type": "number" },
+        "shippingFee": { "type": "number" },
+        "totalAmount": { "type": "number" },
+        "paymentMethod": { "type": "string", "enum": ["esewa", "khalti", "bank_transfer", "cod"] },
+        "paymentStatus": { "type": "string", "enum": ["pending", "paid", "failed"] },
+        "orderStatus": { "type": "string", "enum": ["processing", "dispatched", "delivered", "cancelled"] },
+        "paymentRef": { "type": "string", "maxLength": 120 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "customerName", "customerPhone", "customerEmail", "deliveryZone", "shippingAddress", "items", "subtotal", "shippingFee", "totalAmount", "paymentMethod", "paymentStatus", "orderStatus", "createdAt", "updatedAt"]
+    },
+    "ExchangeRequest": {
+      "title": "ExchangeRequest",
+      "description": "Old-phone trade-in or exchange valuation inquiry.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "maxLength": 128 },
+        "customerName": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "customerPhone": { "type": "string", "minLength": 7, "maxLength": 20 },
+        "currentDevice": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "condition": { "type": "string", "enum": ["Mint / Like New", "Good (Minor Wear)", "Fair (Visible Scratches)"] },
+        "targetProductSlug": { "type": "string", "maxLength": 120 },
+        "estimatedValue": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "reviewed", "approved", "completed"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "customerName", "customerPhone", "currentDevice", "condition", "status", "createdAt", "updatedAt"]
+    },
+    "SiteSettings": {
+      "title": "SiteSettings",
+      "description": "Global storefront banners, announcement bar, and Fonepay/bank details.",
+      "type": "object",
+      "properties": {
+        "storeName": { "type": "string", "minLength": 2, "maxLength": 60 },
+        "announcementBar": { "type": "string", "maxLength": 180 },
+        "heroTitle": { "type": "string", "minLength": 4, "maxLength": 140 },
+        "heroSubtitle": { "type": "string", "maxLength": 280 },
+        "heroCtaLabel": { "type": "string", "maxLength": 40 },
+        "heroCtaLink": { "type": "string", "maxLength": 120 },
+        "whatsappNumber": { "type": "string", "maxLength": 30 },
+        "bankName": { "type": "string", "maxLength": 100 },
+        "accountName": { "type": "string", "maxLength": 100 },
+        "accountNumber": { "type": "string", "maxLength": 60 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["storeName", "heroTitle", "updatedAt"]
+    },
+    "StaffMember": {
+      "title": "StaffMember",
+      "description": "Role assignment for admin, store manager, or blog editor.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "maxLength": 120 },
+        "name": { "type": "string", "maxLength": 80 },
+        "role": { "type": "string", "enum": ["admin", "store-manager", "editor"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "name", "role", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Publicly readable catalog of smartphones, laptops, accessories, and electronics."
+    },
+    "/brands/{brandId}": {
+      "schema": { "$ref": "#/entities/Brand" },
+      "description": "Publicly readable directory of mobile, laptop, and appliance brands."
+    },
+    "/categories/{categoryId}": {
+      "schema": { "$ref": "#/entities/Category" },
+      "description": "Publicly readable product categories grouped by department."
+    },
+    "/posts/{postId}": {
+      "schema": { "$ref": "#/entities/Post" },
+      "description": "Editorial articles; published posts are public, drafts restricted to editorial staff."
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Private customer orders accessible only by the ordering user or store staff."
+    },
+    "/exchangeRequests/{requestId}": {
+      "schema": { "$ref": "#/entities/ExchangeRequest" },
+      "description": "Private phone trade-in requests accessible only by the submitting user or store staff."
+    },
+    "/siteSettings/{settingId}": {
+      "schema": { "$ref": "#/entities/SiteSettings" },
+      "description": "Self-editable storefront configuration and bank/Fonepay details."
+    },
+    "/staff/{uid}": {
+      "schema": { "$ref": "#/entities/StaffMember" },
+      "description": "Role-based access control records for staff logins."
+    }
+  }
+}

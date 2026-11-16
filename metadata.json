@@ -1,0 +1,6 @@
+{
+  "name": "KtmTech — Nepal Tech Store, Specs & Reviews",
+  "description": "Electronics e-commerce store, smartphone & laptop price database, side-by-side spec comparator, EMI calculator, tech blog, and self-editable CMS for Nepal.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
